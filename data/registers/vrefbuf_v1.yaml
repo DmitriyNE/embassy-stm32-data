@@ -1,23 +1,23 @@
 block/VREFBUF:
   description: Voltage reference buffer.
   items:
-  - name: VREFBUF_CSR
-    description: VREFBUF control and status register.
+  - name: CSR
+    description: control and status register.
     byte_offset: 0
-    fieldset: VREFBUF_CSR
-  - name: VREFBUF_CCR
-    description: VREFBUF calibration control register.
+    fieldset: CSR
+  - name: CCR
+    description: calibration control register.
     byte_offset: 4
-    fieldset: VREFBUF_CCR
-fieldset/VREFBUF_CCR:
-  description: VREFBUF calibration control register.
+    fieldset: CCR
+fieldset/CCR:
+  description: calibration control register.
   fields:
   - name: TRIM
     description: TRIM.
     bit_offset: 0
     bit_size: 6
-fieldset/VREFBUF_CSR:
-  description: VREFBUF control and status register.
+fieldset/CSR:
+  description: control and status register.
   fields:
   - name: ENVR
     description: ENVR.
