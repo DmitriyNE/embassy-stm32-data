@@ -1,0 +1,169 @@
+block/HASH:
+  description: Hash processor.
+  items:
+  - name: CR
+    description: control register.
+    byte_offset: 0
+    fieldset: CR
+  - name: DIN
+    description: data input register.
+    byte_offset: 4
+    access: Write
+  - name: STR
+    description: start register.
+    byte_offset: 8
+    fieldset: STR
+  - name: HRA
+    description: digest registers.
+    array:
+      len: 5
+      stride: 4
+    byte_offset: 12
+    access: Read
+  - name: IMR
+    description: interrupt enable register.
+    byte_offset: 32
+    fieldset: IMR
+  - name: SR
+    description: status register.
+    byte_offset: 36
+    fieldset: SR
+  - name: CSR
+    description: context swap registers.
+    array:
+      len: 54
+      stride: 4
+    byte_offset: 248
+  - name: HR
+    description: HASH digest register.
+    array:
+      len: 8
+      stride: 4
+    byte_offset: 784
+    access: Read
+fieldset/CR:
+  description: control register.
+  fields:
+  - name: INIT
+    description: Initialize message digest calculation.
+    bit_offset: 2
+    bit_size: 1
+  - name: DMAE
+    description: DMA enable.
+    bit_offset: 3
+    bit_size: 1
+  - name: DATATYPE
+    description: Data type selection.
+    bit_offset: 4
+    bit_size: 2
+    enum: DATATYPE
+  - name: MODE
+    description: Mode selection.
+    bit_offset: 6
+    bit_size: 1
+  - name: NBW
+    description: Number of words already pushed.
+    bit_offset: 8
+    bit_size: 4
+  - name: DINNE
+    description: DIN not empty.
+    bit_offset: 12
+    bit_size: 1
+  - name: MDMAT
+    description: Multiple DMA Transfers.
+    bit_offset: 13
+    bit_size: 1
+  - name: LKEY
+    description: Long key selection.
+    bit_offset: 16
+    bit_size: 1
+  - name: ALGO
+    description: Algorithm selection.
+    bit_offset: 17
+    bit_size: 2
+    enum: ALGO
+fieldset/IMR:
+  description: interrupt enable register.
+  fields:
+  - name: DINIE
+    description: Data input interrupt enable.
+    bit_offset: 0
+    bit_size: 1
+  - name: DCIE
+    description: Digest calculation completion interrupt enable.
+    bit_offset: 1
+    bit_size: 1
+fieldset/SR:
+  description: status register.
+  fields:
+  - name: DINIS
+    description: Data input interrupt status.
+    bit_offset: 0
+    bit_size: 1
+  - name: DCIS
+    description: Digest calculation completion interrupt status.
+    bit_offset: 1
+    bit_size: 1
+  - name: DMAS
+    description: DMA Status.
+    bit_offset: 2
+    bit_size: 1
+  - name: BUSY
+    description: Busy bit.
+    bit_offset: 3
+    bit_size: 1
+  - name: NBWP
+    description: Number of words pushed.
+    bit_offset: 9
+    bit_size: 5
+  - name: DINNE
+    description: DIN not empty bit.
+    bit_offset: 15
+    bit_size: 1
+  - name: NBWE
+    description: Number of words expected.
+    bit_offset: 16
+    bit_size: 5
+fieldset/STR:
+  description: start register.
+  fields:
+  - name: NBLW
+    description: Number of valid bits in the last word of the message.
+    bit_offset: 0
+    bit_size: 5
+  - name: DCAL
+    description: Digest calculation.
+    bit_offset: 8
+    bit_size: 1
+enum/ALGO:
+  description: Algorithm selection.
+  bit_size: 2
+  variants:
+  - name: SHA-1
+    description: SHA-1 algorithm
+    value: 0
+  - name: MD5
+    description: MD5 algorithm
+    value: 1
+  - name: SHA2-224
+    description: SHA2-224 algorithm
+    value: 2
+  - name: SHA2-256
+    description: SHA2-256 algorithm
+    value: 3
+enum/DATATYPE:
+  description: Data type selection.
+  bit_size: 2
+  variants:
+  - name: NoSwap
+    description: 32-bit data. Data written are used without reordering.
+    value: 0
+  - name: HalfWord
+    description: 16-bit data. Data written are considered as two half-words.
+    value: 1
+  - name: ByteSwap
+    description: 8-bit data. Data written are considered as four bytes.
+    value: 2
+  - name: BitSwap
+    description: Bit-string. Data written are considered as 32 bits.
+    value: 3
